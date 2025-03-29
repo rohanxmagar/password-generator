@@ -1,0 +1,27 @@
+name: Obfuscate JavaScript
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  obfuscate-js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install JavaScript Obfuscator
+        run: npm install -g javascript-obfuscator
+
+      - name: Obfuscate JS
+        run: javascript-obfuscator script.js --output script-obf.js
+
+      - name: Commit changes
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "GitHub Actions"
+          git add script-obf.js
+          git commit -m "Obfuscated JavaScript"
+          git push
